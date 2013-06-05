@@ -12,13 +12,14 @@ public class QuickSort {
 	 */
 	public static void main(String[] args) {
 
-		int nData = 20000000; // 정렬할 데이터 개수 설정.
+		int nData = 10000000; // 정렬할 데이터 개수 설정.
 		TargetDataList = new double[nData];
-
+		double DataForRecursive[] = new double[nData];
+		
 		// 데이터 생성
 		for (int i = 0; i < nData; i++) {
 			TargetDataList[i] = Math.random();
-
+			DataForRecursive[i] = TargetDataList[i];
 //			System.out.print(TargetDataList[i] + " "); // 데이터 출력
 		}
 //		System.out.println();
@@ -28,23 +29,33 @@ public class QuickSort {
 		
 		StopWatch.start();
 		for(int i = 0; i < TargetDataList.length; i++){
-			if(executeQuickSort()){
+			if(executeNonRecursiveQuickSort()){
 				break;	//정렬이 완료되면 중간에라도 루프를 빠져나옴.
 			}
 		}
 		StopWatch.stop();
-		System.out.println("Quick Sort Time : " + StopWatch.TotalTimeInSec());
+		System.out.println("Non-Recursive Quick Sort Time : " + StopWatch.TotalTimeInSec());
+		
+		
+		StopWatch.start();
+		recursiveQuickSort(DataForRecursive, 0, DataForRecursive.length - 1 );
+		StopWatch.stop();
+		System.out.println("Recursive Quick Sort Time : " + StopWatch.TotalTimeInSec());
 		
 //		// 정렬된 데이터 출력
 //		for (int i = 0; i < nData; i++) {
 //			System.out.print(TargetDataList[i] + " "); // 데이터 출력
 //		}
 //		System.out.println();		
+//		for (int i = 0; i < nData; i++) {
+//			System.out.print(DataForRecursive[i] + " "); // 데이터 출력
+//		}
+//		System.out.println();
 	
 	}
 
 	
-	private static boolean executeQuickSort() {
+	private static boolean executeNonRecursiveQuickSort() {
 		
 		boolean isSorted = false;	//모든 원소가 정렬되었으면 true, 아니면 false
 		
@@ -139,6 +150,44 @@ public class QuickSort {
 		
 	}
 	
+	
+	
+	public static void recursiveQuickSort(double[] a, int p, int r)
+    {
+        if(p<r)
+        {
+            int q=recursivePartition(a,p,r);
+            recursiveQuickSort(a,p,q);
+            recursiveQuickSort(a,q+1,r);
+        }
+    }
+
+    private static int recursivePartition(double[] a, int p, int r) {
+
+        double x = a[p];
+        int i = p-1 ;
+        int j = r+1 ;
+
+        while (true) {
+            i++;
+            while ( i< r && a[i] < x)
+                i++;
+            j--;
+            while (j>p && a[j] > x)
+                j--;
+
+            if (i < j)
+                swap(a, i, j);
+            else
+                return j;
+        }
+    }
+
+    private static void swap(double[] a, int i, int j) {
+        double temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
 
 }
 
