@@ -12,7 +12,7 @@ public class QuickSort {
 	 */
 	public static void main(String[] args) {
 
-		int nData = 10000000; // 정렬할 데이터 개수 설정.
+		int nData = 100000; // 정렬할 데이터 개수 설정.
 		TargetDataList = new double[nData];
 		double DataForRecursive[] = new double[nData];
 		
